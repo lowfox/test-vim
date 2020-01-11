@@ -1,0 +1,119 @@
+モード種別
+・ノーマルモード: ESC
+・インサートモード: i,o,a
+・コマンドモード: :
+・ビジュアルモード：v,V,CTRL+v(短形)
+
+ファイル展開
+-----CommandMode-----
+:e filename  	別ファイルを開いて移動
+
+ファイル内移動
+-----NormalMode-----
+gg		ファイル先頭移動  
+G		ファイル終端移動
+CTRL+f/+b 	画面単位の移動
+w/b　　　 	単語単位
+f+(文字)	カーソル右の最初の文字に移動。;で次の文字に移動
+%		『』上で％で対応する『』に移動
+^		行頭に移動
+$		行末に移動
+
+コピー・カット(削除)・ペースト
+-----NormalMode-----
+x		文字カット
+dd		行カット
+3wd		3単語カット
+yy 		行コピー
+3yy 		以下3行コピー
+p		ペースト	
+3p		3回ペースト
+
+検索
+-----NormalMode-----
+/　		検索
+n　		した方向移動
+N 		↑方向に移動
+* 		今カーソルある位置の単語を検索（↓方向
+#　		同上（↑方向）
+
+置換
+-----CommandMode-----
+:s/int/float	カーソル行内の最初のintのみ、floatに置換
+:s/int/float/g	カーソル行内の全てのintをfloatに置換
+:%s/int/float/g ファイル内の全てのintをfloatに置換
+:%s/int/float/gc ファイル内の全てのintをfloatに置換(許可取りながら)
+
+undo,redo
+undo ...操作の取り消しwinならCTRL+z
+redo ...取り消した操作のやり直し。winならCTRL+y
+-----NormalMode-----
+u		undo
+CTRL+r		redo 
+
+画面分割
+-----CommandMode-----
+:sp(split)	水平分割
+:vp		垂直分割
+CTRL+w		画面移動
+:close		画面を閉じる
+
+使用例（分割後別ファイル開く）
+:sp → CTRL+w　→　:e ファイル名
+
+タブ
+-----CommandMode-----
+:tabnew		新しくタブを開く。ファイルは無名
+:tabe filename	既にあるファイルを開く(tab editの意)
+:tabdo %s/int/float/g　開いているタブの全てのintをfloatに置換
+:close		今のタブを閉じる。
+
+-----NomalMode-----
+gt		タブ間の移動
+
+-----コマンドラインから-----
+vim -p sample sample2 　sample,saple2ファイルをタブで開く。
+
+直前の操作を行う
+-----NomalMode-----
+.
+
+利用例：3行削除を繰り返す
+3dd→ .→ .→ .
+
+インデント補正
+-----NomalMode-----
+全選択(gg ビジュアルモード G) → =
+
+補完機能
+-----NomalMode-----
+CTRL+n		補完候補を表示する
+使用例:stdio
+std::c　→　CTRL+n　候補が出てくる（cin,cout）アローキー選択か、そのまま書いてエンターか。
+
+
+短形選択後編集する
+-----VisualMode(短形)-----
+文字追加
+CTRL+v →　選択　→　挿入モードに入る(shift+i) →　編集　→　ESC
+
+文字削除
+CTRL+v →　選択　→ x　→　ESC
+
+テキストオブジェクトを使用して編集
+使用例：int main(void) → int main(int) にしたい時
+(void)のどれかにカーソルを合わせる
+c : change & insert	(d削除/yヤンク)			:操作種類選択
+i :　中身		(a全体)				:操作適用範囲選択
+( : 丸括弧		("ダブルコーテーション/tタグ<>) :オブジェクトの種類選択
+と入力するとvoidが消えてインサートモードに変わる
+
+便利なコマンド
+-----CommandMode-----
+:set number	行番号を表示する
+:set nonumber	行番号を非表示にする
+:syntax on	テキストを色分けする
+:syntax off	テキストを色分けしない
+:set tabstop=4	タブの空白数を設定する
+:set ignorecase	検索で大文字小文字を区別しない。	
+:set noignorecase 検索で大文字小文字を区別する。
